@@ -104,7 +104,9 @@ class HrHospitalDoctor(models.Model):
             "context": {
                 "default_doctor_id": self.id,
                 "default_status": "planned",
-                "default_planned_datetime": fields.Datetime.to_string(fields.Datetime.now()),
+                "default_planned_datetime": fields.Datetime.to_string(
+                    fields.Datetime.now()
+                ),
             },
         }
 
@@ -120,9 +122,11 @@ class HrHospitalDoctor(models.Model):
         self.ensure_one()
 
         appointment_patients = self._get_report_appointments().mapped("patient_id")
-        personal_patients = self.env["hr.hospital.patient"].search([
-            ("personal_doctor_id", "=", self.id),
-        ])
+        personal_patients = self.env["hr.hospital.patient"].search(
+            [
+                ("personal_doctor_id", "=", self.id),
+            ]
+        )
 
         return (appointment_patients | personal_patients).sorted("name")
 

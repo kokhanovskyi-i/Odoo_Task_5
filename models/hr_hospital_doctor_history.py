@@ -61,6 +61,5 @@ class HospitalDoctorHistory(models.Model):
             assignment_date = record.assignment_date or ""
 
             record.display_name = (
-                f"{patient_name} - {doctor_name} "
-                f"({category_name}) {assignment_date}"
+                f"{patient_name} - {doctor_name} ({category_name}) {assignment_date}"
             )

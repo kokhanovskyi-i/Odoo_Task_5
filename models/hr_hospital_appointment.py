@@ -72,21 +72,27 @@ class HrHospitalAppointment(models.Model):
         }
 
         if protected_fields.intersection(vals):
-            finished_appointments = self.filtered(lambda appointment: appointment.status == "done")
+            finished_appointments = self.filtered(
+                lambda appointment: appointment.status == "done"
+            )
             if finished_appointments:
                 raise UserError(
                     "You cannot change date, time or doctor for a completed visit."
                 )
 
         if vals.get("active") is False:
-            finished_appointments = self.filtered(lambda appointment: appointment.status == "done")
+            finished_appointments = self.filtered(
+                lambda appointment: appointment.status == "done"
+            )
             if finished_appointments:
                 raise UserError("You cannot archive completed visits.")
 
         return super().write(vals)
 
     def unlink(self):
-        finished_appointments = self.filtered(lambda appointment: appointment.status == "done")
+        finished_appointments = self.filtered(
+            lambda appointment: appointment.status == "done"
+        )
         if finished_appointments:
             raise UserError("You cannot delete completed visits.")
 
@@ -96,9 +102,11 @@ class HrHospitalAppointment(models.Model):
     def _compute_same_disease_visit_count(self):
         for appointment in self:
             if appointment.disease_id:
-                appointment.same_disease_visit_count = self.search_count([
-                    ("disease_id", "=", appointment.disease_id.id),
-                ])
+                appointment.same_disease_visit_count = self.search_count(
+                    [
+                        ("disease_id", "=", appointment.disease_id.id),
+                    ]
+                )
             else:
                 appointment.same_disease_visit_count = 0
 

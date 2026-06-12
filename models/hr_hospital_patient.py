@@ -47,9 +47,13 @@ class HrHospitalPatient(models.Model):
     @api.depends()
     def _compute_appointment_count(self):
         for patient in self:
-            patient.appointment_count = self.env["hr.hospital.appointment"].search_count([
-                ("patient_id", "=", patient.id),
-            ])
+            patient.appointment_count = self.env[
+                "hr.hospital.appointment"
+            ].search_count(
+                [
+                    ("patient_id", "=", patient.id),
+                ]
+            )
 
     def action_view_appointments(self):
         self.ensure_one()
@@ -79,6 +83,8 @@ class HrHospitalPatient(models.Model):
                 "default_patient_id": self.id,
                 "default_doctor_id": self.personal_doctor_id.id,
                 "default_status": "planned",
-                "default_planned_datetime": fields.Datetime.to_string(fields.Datetime.now()),
+                "default_planned_datetime": fields.Datetime.to_string(
+                    fields.Datetime.now()
+                ),
             },
         }

@@ -10,6 +10,8 @@ The module implements a basic hospital management system for working with doctor
 - Patients management
 - Diseases management
 - Patient appointments management
+- Doctor PDF report with visit history and patient list
+- Improved doctor kanban view with interns and quick actions
 - Basic master data
 - Demo data
 
