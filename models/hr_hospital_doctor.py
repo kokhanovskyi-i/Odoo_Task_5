@@ -50,6 +50,18 @@ class HrHospitalDoctor(models.Model):
         readonly=True,
     )
 
+    intern_names = fields.Char(
+        string="Intern Names",
+        compute="_compute_intern_names",
+    )
+
+    appointment_ids = fields.One2many(
+        comodel_name="hr.hospital.appointment",
+        inverse_name="doctor_id",
+        string="Visits",
+        readonly=True,
+    )
+
     email = fields.Char(
         string="Email",
         required=True,
@@ -95,3 +107,40 @@ class HrHospitalDoctor(models.Model):
                 "default_planned_datetime": fields.Datetime.to_string(fields.Datetime.now()),
             },
         }
+
+    def _get_report_appointments(self):
+        self.ensure_one()
+
+        return self.env["hr.hospital.appointment"].search(
+            [("doctor_id", "=", self.id)],
+            order="planned_datetime desc, id desc",
+        )
+
+    def _get_report_patients(self):
+        self.ensure_one()
+
+        appointment_patients = self._get_report_appointments().mapped("patient_id")
+        personal_patients = self.env["hr.hospital.patient"].search([
+            ("personal_doctor_id", "=", self.id),
+        ])
+
+        return (appointment_patients | personal_patients).sorted("name")
+
+    def _get_appointment_status_label(self, status):
+        status_labels = dict(
+            self.env["hr.hospital.appointment"]._fields["status"].selection
+        )
+        return status_labels.get(status, status)
+
+    def _get_appointment_status_style(self, status):
+        status_styles = {
+            "planned": "background-color: #fff3cd; color: #856404; font-weight: bold;",
+            "done": "background-color: #d4edda; color: #155724; font-weight: bold;",
+            "cancelled": "background-color: #f8d7da; color: #721c24; font-weight: bold;",
+        }
+        return status_styles.get(status, "")
+
+    @api.depends("intern_ids.name")
+    def _compute_intern_names(self):
+        for doctor in self:
+            doctor.intern_names = ", ".join(doctor.intern_ids.mapped("name"))
