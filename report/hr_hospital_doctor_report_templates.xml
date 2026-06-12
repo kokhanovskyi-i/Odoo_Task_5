@@ -147,7 +147,7 @@
                                     </td>
 
                                     <td>
-                                        <span t-field="appointment.summary"/>
+                                        <div t-field="appointment.summary"/>
                                     </td>
                                 </tr>
                             </tbody>

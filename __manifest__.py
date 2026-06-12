@@ -1,43 +1,36 @@
 {
-    'name': 'HR Hospital',
-    'summary': 'Hospital management system',
-    'author': 'Kokhanovskyi Ivan',
-    'website': 'https://github.com/kokhanovskyi-i/',
-    'category': 'Customizations',
-    'license': 'OPL-1',
-    'version': '19.0.1.0.0',
-
-    'depends': [
-        'base',
+    "name": "HR Hospital",
+    "summary": "Hospital management system",
+    "author": "Kokhanovskyi Ivan",
+    "website": "https://github.com/kokhanovskyi-i/",
+    "category": "Customizations",
+    "license": "OPL-1",
+    "version": "19.0.1.0.0",
+    "depends": [
+        "base",
     ],
-
-    'data': [
-        'security/ir.model.access.csv',
-        'data/disease_data.xml',
-        'data/doctor_category_data.xml',
-        'views/hr_hospital_appointment_views.xml',
-        'views/hr_hospital_disease_views.xml',
-        'views/hr_hospital_doctor_views.xml',
-        'views/hr_hospital_doctor_category_views.xml',
-        'views/hr_hospital_doctor_history_views.xml',
-        'views/hr_hospital_patient_views.xml',
-        'views/mass_reassign_doctor_wizard_views.xml',
-        'views/visit_report_wizard_views.xml',
+    "data": [
+        "security/ir.model.access.csv",
+        "data/disease_data.xml",
+        "data/doctor_category_data.xml",
+        "views/hr_hospital_appointment_views.xml",
+        "views/hr_hospital_disease_views.xml",
+        "views/hr_hospital_doctor_views.xml",
+        "views/hr_hospital_doctor_category_views.xml",
+        "views/hr_hospital_doctor_history_views.xml",
+        "views/hr_hospital_patient_views.xml",
+        "views/mass_reassign_doctor_wizard_views.xml",
+        "views/visit_report_wizard_views.xml",
         "views/disease_report_wizard_views.xml",
         "report/hr_hospital_doctor_report_templates.xml",
         "report/hr_hospital_doctor_report.xml",
-        'views/hr_hospital_menu.xml',
+        "views/hr_hospital_menu.xml",
     ],
-
-    'demo': [
-        'demo/demo_data.xml',
+    "demo": [
+        "demo/demo_data.xml",
     ],
-
-    'installable': True,
-    'application': True,
-    'auto_install': False,
-
-    'images': [
-        'static/description/icon.png'
-    ],
+    "installable": True,
+    "application": True,
+    "auto_install": False,
+    "images": ["static/description/icon.png"],
 }

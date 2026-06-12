@@ -46,7 +46,11 @@ class HrHospitalDiseaseReportWizard(models.TransientModel):
     @api.constrains("date_from", "date_to")
     def _check_dates(self):
         for wizard in self:
-            if wizard.date_from and wizard.date_to and wizard.date_from > wizard.date_to:
+            if (
+                wizard.date_from
+                and wizard.date_to
+                and wizard.date_from > wizard.date_to
+            ):
                 raise ValidationError("Date From cannot be later than Date To.")
 
     def action_show_report(self):
@@ -62,11 +66,15 @@ class HrHospitalDiseaseReportWizard(models.TransientModel):
 
         if self.date_from:
             date_from = datetime.combine(self.date_from, time.min)
-            domain.append(("planned_datetime", ">=", fields.Datetime.to_string(date_from)))
+            domain.append(
+                ("planned_datetime", ">=", fields.Datetime.to_string(date_from))
+            )
 
         if self.date_to:
             date_to = datetime.combine(self.date_to, time.max)
-            domain.append(("planned_datetime", "<=", fields.Datetime.to_string(date_to)))
+            domain.append(
+                ("planned_datetime", "<=", fields.Datetime.to_string(date_to))
+            )
 
         return {
             "type": "ir.actions.act_window",
